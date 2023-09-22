@@ -1,0 +1,41 @@
+SELECT * FROM guest WHERE last_name = 'Grezda';
+
+SELECT * FROM room WHERE availability = 0;
+
+SELECT * FROM reservation WHERE checkin_date = '25.09.2023' AND checkout_date = '30.09.2023';
+
+SELECT employee.name, employee.last_name, employee.idRoom FROM employee LEFT JOIN room_assignment ON employee.employee_id = room_assignment.employee_id;
+
+SELECT * FROM Employee WHERE Position = 'Receptionist';
+
+
+SELECT guest.name, guest.last_name, SUM(payment.Amount) AS TotalAmountSpent
+FROM guest
+JOIN reservation ON guest.guest_id = reservation.idGuest
+JOIN payment ON reservation.reservation_id= payment.idReservation
+WHERE guest.guest_id = 2;
+
+
+SELECT room.room_id, room.room_type
+FROM room
+JOIN room_assignment ON room.room_id = room_assignment.idRoom
+WHERE room_assignment.reservation_id = 1;
+
+
+SELECT position, COUNT(*) AS EmployeeCount
+FROM Employee
+GROUP BY position;
+
+
+SELECT guest.name, guest.last_name, reservation.reservation_id, reservation.checkin_date, reservation.checkout_date
+FROM guest
+JOIN reservation ON guest.guest_id = reservation.idGuest
+WHERE guest.guest_id = 3;
+
+
+SELECT room_type, COUNT(*) AS ReservationCount
+FROM reservation
+JOIN room ON reservation.room_id = room.room_id
+GROUP BY room_type
+ORDER BY ReservationCount DESC
+LIMIT 1;
